@@ -1,0 +1,7 @@
+id=$(aws ec2 describe-instances --filters "Name=tag-value,Values=${1}" "Name=instance-state-name,Values=running" --query "Reservations[*].Instances[*].[InstanceId]" --output text | awk '{print $1}')
+echo $id
+
+aws ssm start-session \
+  --document-name AWS-StartInteractiveCommand \
+  --parameters '{"command": ["sudo --login ; PS1=\"\\t [\\u@\\h \\w]> \" PROMPT_DIRTRIM=2 bash"]}' \
+  --target $id

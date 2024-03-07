@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#
+# Bootstrap script for setting up a new OSX machine
+#
+# This should be idempotent so it can be run multiple times.
+#
+
+# homebrew
+if command -v brew; then
+    echo "Homebrew already installed. Getting updates..."
+    brew update
+    brew doctor
+else
+    echo 'brew must be installed! (/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)")' >&2
+    exit 1
+fi

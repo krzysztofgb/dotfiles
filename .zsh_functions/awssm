@@ -1,0 +1,4 @@
+aws ssm start-session \
+  --document-name AWS-StartInteractiveCommand \
+  --parameters '{"command": ["sudo --login ; PS1=\"\\t [\\u@\\h \\w]> \" PROMPT_DIRTRIM=2 bash"]}' \
+  --target $1

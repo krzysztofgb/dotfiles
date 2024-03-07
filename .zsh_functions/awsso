@@ -1,0 +1,6 @@
+awsso () {
+    printf "SSOing\n"
+    aws sso login
+    printf "SSO Complete, yawsso'ing\n"
+    yawsso
+}
