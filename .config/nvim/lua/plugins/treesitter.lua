@@ -7,11 +7,35 @@ return {
 
         ---@diagnostic disable-next-line: missing-fields
         require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'markdown_inline', 'vim', 'vimdoc' },
-        -- Autoinstall languages that are not installed
-        auto_install = true,
-        highlight = { enable = true },
-        indent = { enable = true },
+            ensure_installed = {
+                "bash",
+                "c",
+                "diff",
+                "html",
+                "javascript",
+                "jsdoc",
+                "json",
+                "jsonc",
+                "lua",
+                "luadoc",
+                "luap",
+                "markdown",
+                "markdown_inline",
+                "python",
+                "query",
+                "regex",
+                "toml",
+                "tsx",
+                "typescript",
+                "vim",
+                "vimdoc",
+                "xml",
+                "yaml",
+            },
+            -- Autoinstall languages that are not installed
+            auto_install = true,
+            highlight = { enable = true },
+            indent = { enable = true },
         }
 
         -- There are additional nvim-treesitter modules that you can use to interact
