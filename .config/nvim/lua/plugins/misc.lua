@@ -1,4 +1,7 @@
 return {
+  -- Neovim setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API
+  'folke/neodev.nvim',
+
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
@@ -35,6 +38,7 @@ return {
         ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+        ['<leader>t'] = { name = '[T]est', _ = 'which_key_ignore' }
       }
     end,
   },
