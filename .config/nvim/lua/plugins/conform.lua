@@ -6,12 +6,12 @@ return {
 	keys = {
 		{
 			-- Customize or remove this keymap to your liking
-			"<leader>fb",
+			"<leader>fc",
 			function()
 				require("conform").format({ async = true, lsp_fallback = true })
 			end,
 			mode = "",
-			desc = "[F]ormat [B]uffer",
+			desc = "[F]ormat [C]urrent Buffer",
 		},
 	},
 	opts = {

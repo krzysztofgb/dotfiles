@@ -5,6 +5,8 @@ return {
 	branch = "0.1.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
+		"nvim-telescope/telescope-ui-select.nvim",
+		"nvim-telescope/telescope-file-browser.nvim",
 		{ -- If encountering errors, see telescope-fzf-native README for install instructions
 			"nvim-telescope/telescope-fzf-native.nvim",
 
@@ -18,7 +20,6 @@ return {
 				return vim.fn.executable("make") == 1
 			end,
 		},
-		{ "nvim-telescope/telescope-ui-select.nvim" },
 		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font }, -- Useful for getting pretty icons, but requires a Nerd Font
 	},
 	config = function()
@@ -45,8 +46,9 @@ return {
 		-- See `:help telescope` and `:help telescope.setup()`
 		require("telescope").setup({
 			extensions = {
+				file_browser = {},
 				["ui-select"] = {
-					require("telescope.themes").get_dropdown(),
+					require("telescope.themes").get_dropdown()
 				},
 			},
 			pickers = {
@@ -59,6 +61,9 @@ return {
 		-- Enable telescope extensions, if they are installed
 		pcall(require("telescope").load_extension, "fzf")
 		pcall(require("telescope").load_extension, "ui-select")
+
+		pcall(require("telescope").load_extension, "file_browser")
+		vim.keymap.set("n", "<space>fb", function() require("telescope").extensions.file_browser.file_browser() end, { desc = "[F]ile [B]rowser" })
 
 		-- See `:help telescope.builtin`
 		local builtin = require("telescope.builtin")

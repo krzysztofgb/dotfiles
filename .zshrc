@@ -95,15 +95,6 @@ fi
 fpath=( ~/.zsh_functions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
-# Go config
-export GOPATH=$HOME/go
-export GOROOT=/usr/local/go
-export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOPATH
-export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$GOBIN
-export PATH=$PATH:/Users/krzysztofg/go/bin
-
 # Python config
 alias poetry='noglob poetry'
 if command -v pyenv 1>/dev/null 2>&1; then
