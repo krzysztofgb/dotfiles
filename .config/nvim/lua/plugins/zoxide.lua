@@ -28,7 +28,9 @@ return {
 								vim.cmd.edit(selection.path)
 							end,
 						},
-						["<C-q>"] = { action = z_utils.create_basic_command("split") },
+						["<C-q>"] = {
+							action = z_utils.create_basic_command("split"),
+						},
 					},
 				},
 			},

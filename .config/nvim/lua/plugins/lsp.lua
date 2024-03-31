@@ -2,9 +2,6 @@
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
-		-- Neodev should load before lspconfig
-		"folke/neodev.nvim",
-
 		-- Automatically install LSPs and related tools to stdpath for neovim
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
@@ -13,6 +10,8 @@ return {
 		-- Useful status updates for LSP
 		-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
 		{ "j-hui/fidget.nvim", opts = {} },
+
+		{ "folke/neodev.nvim", opts = {} },
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -96,8 +95,11 @@ return {
 
 		-- Enable the following language servers
 		local servers = {
-			gopls = {},
-			hadolint = {},
+			gopls = {
+				analyses = {
+					unusedvariable = true,
+				},
+			},
 			lua_ls = {
 				settings = {
 					Lua = {
@@ -116,14 +118,14 @@ return {
 						completion = {
 							callSnippet = "Replace",
 						},
-						-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-						-- diagnostics = { disable = { 'missing-fields' } },
+						diagnostics = { disable = { "missing-fields" } },
+						format = {
+							enable = false,
+						},
 					},
 				},
 			},
 			pyright = {},
-			rust_analyzer = {},
-			tsserver = {},
 		}
 
 		-- Ensure the servers and tools above are installed
@@ -142,7 +144,9 @@ return {
 			"black", -- Used to format python code
 			"stylua", -- Used to format lua code
 		})
-		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+		require("mason-tool-installer").setup({
+			ensure_installed = ensure_installed,
+		})
 
 		require("mason-lspconfig").setup({
 			handlers = {

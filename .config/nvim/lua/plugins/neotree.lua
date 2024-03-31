@@ -120,7 +120,10 @@ return {
 					["<2-LeftMouse>"] = "open",
 					["<cr>"] = "open",
 					["<esc>"] = "cancel", -- close preview or floating neo-tree window
-					["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
+					["P"] = {
+						"toggle_preview",
+						config = { use_float = true, use_image_nvim = true },
+					},
 					-- Read `# Preview Mode` for more information
 					["l"] = "focus_preview",
 					["S"] = "open_split",
@@ -217,7 +220,11 @@ return {
 						["<c-x>"] = "clear_filter",
 						["[g"] = "prev_git_modified",
 						["]g"] = "next_git_modified",
-						["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+						["o"] = {
+							"show_help",
+							nowait = false,
+							config = { title = "Order by", prefix_key = "o" },
+						},
 						["oc"] = { "order_by_created", nowait = false },
 						["od"] = { "order_by_diagnostics", nowait = false },
 						["og"] = { "order_by_git_status", nowait = false },
@@ -249,7 +256,11 @@ return {
 						["bd"] = "buffer_delete",
 						["<bs>"] = "navigate_up",
 						["."] = "set_root",
-						["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+						["o"] = {
+							"show_help",
+							nowait = false,
+							config = { title = "Order by", prefix_key = "o" },
+						},
 						["oc"] = { "order_by_created", nowait = false },
 						["od"] = { "order_by_diagnostics", nowait = false },
 						["om"] = { "order_by_modified", nowait = false },
@@ -270,7 +281,11 @@ return {
 						["gc"] = "git_commit",
 						["gp"] = "git_push",
 						["gg"] = "git_commit_and_push",
-						["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+						["o"] = {
+							"show_help",
+							nowait = false,
+							config = { title = "Order by", prefix_key = "o" },
+						},
 						["oc"] = { "order_by_created", nowait = false },
 						["od"] = { "order_by_diagnostics", nowait = false },
 						["om"] = { "order_by_modified", nowait = false },
