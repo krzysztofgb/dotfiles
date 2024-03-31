@@ -95,6 +95,7 @@ fi
 fpath=( ~/.zsh_functions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
+# Go config
 export GOPATH=$HOME/go
 export GOROOT=/usr/local/go
 export GOBIN=$GOPATH/bin
@@ -103,6 +104,7 @@ export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$GOBIN
 export PATH=$PATH:/Users/krzysztofg/go/bin
 
+# Python config
 alias poetry='noglob poetry'
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
@@ -110,8 +112,10 @@ fi
 PATH=$(pyenv root)/shims:/Users/krzysztofg/.local/bin:$PATH
 export PYTHON_KEYRING_BACKEND=keyring.backends.fail.Keyring
 
+# Java config
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 
+# Roc config
 export PATH="/opt/homebrew/opt/llvm@16/bin:$PATH"
 export PATH="/usr/local/roc:$PATH"
 
