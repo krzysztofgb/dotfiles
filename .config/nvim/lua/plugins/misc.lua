@@ -53,12 +53,4 @@ return {
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = { signs = false },
 	},
-
-	-- Star installed plugins on GitHub :)
-	{
-		"jsongerber/thanks.nvim",
-		opts = {
-			plugin_manager = "lazy",
-		},
-	},
 }

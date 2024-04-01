@@ -2,16 +2,11 @@
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
-		-- Automatically install LSPs and related tools to stdpath for neovim
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
-
-		-- Useful status updates for LSP
-		-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-		{ "j-hui/fidget.nvim", opts = {} },
-
-		{ "folke/neodev.nvim", opts = {} },
+		"j-hui/fidget.nvim",
+		"folke/neodev.nvim",
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -106,14 +101,10 @@ return {
 						runtime = { version = "LuaJIT" },
 						workspace = {
 							checkThirdParty = false,
-							-- Tells lua_ls where to find all the Lua files that you have loaded
-							-- for your neovim configuration.
 							library = {
 								"${3rd}/luv/library",
 								unpack(vim.api.nvim_get_runtime_file("", true)),
 							},
-							-- If lua_ls is really slow on your computer, you can try this instead:
-							-- library = { vim.env.VIMRUNTIME },
 						},
 						completion = {
 							callSnippet = "Replace",
@@ -128,16 +119,8 @@ return {
 			pyright = {},
 		}
 
-		-- Ensure the servers and tools above are installed
-		--  To check the current status of installed tools and/or manually install
-		--  other tools, you can run
-		--    :Mason
-		--
-		--  You can press `g?` for help in this menu
 		require("mason").setup()
 
-		-- You can add other tools here that you want Mason to install
-		-- for you, so that they are available from within Neovim.
 		local ensure_installed = vim.tbl_keys(servers or {})
 		vim.list_extend(ensure_installed, {
 			"golangci-lint", -- Used to format and lint go code
