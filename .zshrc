@@ -103,6 +103,9 @@ fi
 PATH=$(pyenv root)/shims:/Users/krzysztofg/.local/bin:$PATH
 export PYTHON_KEYRING_BACKEND=keyring.backends.fail.Keyring
 
+# Go config
+export PATH="$HOME/go/bin:$PATH"
+
 # Java config
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 
