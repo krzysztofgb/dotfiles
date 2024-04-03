@@ -142,6 +142,7 @@ return {
 			"golangci-lint", -- Used to format and lint go code
 			"black", -- Used to format python code
 			"stylua", -- Used to format lua code
+			"markdownlint", -- Used to format markdown
 		})
 		require("mason-tool-installer").setup({
 			ensure_installed = ensure_installed,
