@@ -60,7 +60,7 @@ return {
 		pcall(require("telescope").load_extension, "file_browser")
 		vim.keymap.set("n", "<space>fb", function()
 			require("telescope").extensions.file_browser.file_browser()
-		end, { desc = "[F]ile [B]rowser" })
+		end, { desc = "[S]earch File [E]xplorer" })
 
 		pcall(require("telescope").load_extension, "zoxide")
 		vim.keymap.set(
