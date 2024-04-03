@@ -12,6 +12,22 @@ return {
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 			callback = function(event)
+				-- Diagnostics
+				vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
+				vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+				vim.keymap.set(
+					"n",
+					"<leader>e",
+					vim.diagnostic.open_float,
+					{ desc = "Show diagnostic [E]rror messages" }
+				)
+				vim.keymap.set(
+					"n",
+					"<leader>q",
+					vim.diagnostic.setloclist,
+					{ desc = "Open diagnostic [Q]uickfix list" }
+				)
+
 				-- Jump to the definition of the word under your cursor.
 				--  This is where a variable was first declared, or where a function is defined, etc.
 				--  To jump back, press <C-T>.
