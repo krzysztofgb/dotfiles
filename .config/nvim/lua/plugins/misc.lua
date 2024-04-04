@@ -1,56 +1,62 @@
+---@type LazySpec
 return {
+	"andweeb/presence.nvim",
+	"max397574/better-escape.nvim",
 	-- Detect tabstop and shiftwidth automatically
 	"tpope/vim-sleuth",
-
-	-- "gc" to comment visual regions/lines
-	"numToStr/Comment.nvim",
-
 	-- Game to practice vim motions
 	"ThePrimeagen/vim-be-good",
-
 	-- Cool animations
 	"eandrju/cellular-automaton.nvim",
-
-	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
-		"lewis6991/gitsigns.nvim",
-		opts = {
-			signs = {
-				add = { text = "+" },
-				change = { text = "~" },
-				delete = { text = "_" },
-				topdelete = { text = "‾" },
-				changedelete = { text = "~" },
-			},
-		},
-	},
-
 	{
-		"windwp/nvim-autopairs",
-		-- Optional dependency
-		dependencies = { "hrsh7th/nvim-cmp" },
+		"ray-x/lsp_signature.nvim",
+		event = "BufRead",
 		config = function()
-			require("nvim-autopairs").setup({})
-			-- If you want to automatically add `(` after selecting a function or method
-			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-			local cmp = require("cmp")
-			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+			require("lsp_signature").setup()
 		end,
 	},
-
-	-- Add indentation guides even on blank lines
 	{
-		"lukas-reineke/indent-blankline.nvim",
-		-- Enable `lukas-reineke/indent-blankline.nvim`
-		-- See `:help ibl`
-		main = "ibl",
-		opts = {},
+		"echasnovski/mini.nvim",
+		config = function()
+			-- Better Around/Inside textobjects
+			--
+			-- Examples:
+			--  - va)  - [V]isually select [A]round [)]paren
+			--  - yinq - [Y]ank [I]nside [N]ext [']quote
+			--  - ci'  - [C]hange [I]nside [']quote
+			require("mini.ai").setup({ n_lines = 500 })
+
+			--- Minimal status line
+			local statusline = require("mini.statusline")
+			statusline.setup({ use_icons = vim.g.have_nerd_font })
+			statusline.section_location = function()
+				return "%2l:%-2v"
+			end
+		end,
 	},
-
-	-- Highlight todo, notes, etc in comments
 	{
-		"folke/todo-comments.nvim",
-		event = "VimEnter",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = { signs = false },
+		"L3MON4D3/LuaSnip",
+		config = function(plugin, opts)
+			require("astronvim.plugins.configs.luasnip")(plugin, opts)
+			local luasnip = require("luasnip")
+			luasnip.filetype_extend("javascript", { "javascriptreact" })
+		end,
+	},
+	{
+		"christoomey/vim-tmux-navigator",
+		cmd = {
+			"TmuxNavigateLeft",
+			"TmuxNavigateDown",
+			"TmuxNavigateUp",
+			"TmuxNavigateRight",
+			"TmuxNavigatePrevious",
+		},
+		config = function()
+			vim.keymap.set("n", "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>")
+			vim.keymap.set("n", "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>")
+			vim.keymap.set("n", "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>")
+			vim.keymap.set("n", "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>")
+			vim.keymap.set("n", "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>")
+		end,
 	},
 }
