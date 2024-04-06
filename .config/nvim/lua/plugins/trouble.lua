@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
 	"folke/trouble.nvim",
 	branch = "dev", -- IMPORTANT! (v3 is on dev currently)
