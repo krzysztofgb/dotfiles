@@ -9,7 +9,7 @@ return {
 		"LazyGitFilterCurrentFile",
 	},
 	keys = {
-		{ "<leader>gg", ":LazyGit<CR>", desc = "Open LazyGit", silent = true },
+		{ "<Leader>gg", ":LazyGit<CR>", desc = "Open LazyGit", silent = true },
 	},
 	dependencies = {
 		"nvim-telescope/telescope.nvim",

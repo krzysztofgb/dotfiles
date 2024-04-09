@@ -25,7 +25,7 @@ return {
 		cmd = { "ConformInfo" },
 		keys = {
 			{
-				"<leader>fc",
+				"<Leader>fc",
 				function()
 					require("conform").format({ async = true, lsp_fallback = true })
 				end,
@@ -77,8 +77,9 @@ return {
 		end,
 	},
 	{ import = "astrocommunity.lsp.nvim-lsp-file-operations" },
-	{ import = "astrocommunity/markdown-and-latex/glow-nvim" },
-	{ import = "astrocommunity/markdown-and-latex/markdown-preview-nvim" },
+	{ import = "astrocommunity.markdown-and-latex.glow-nvim" },
+	{ import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
+	{ import = "astrocommunity.media.codesnap-nvim" },
 	{ import = "astrocommunity.motion.flash-nvim" },
 	{ import = "astrocommunity.motion.harpoon" },
 	{ import = "astrocommunity.motion.mini-surround" },
@@ -96,9 +97,42 @@ return {
 	{ import = "astrocommunity.pack.terraform" },
 	{ import = "astrocommunity.pack.toml" },
 	{ import = "astrocommunity.pack.yaml" },
-	{ import = "astrocommunity/recipes/disable-tabline" },
+	{ import = "astrocommunity.recipes.disable-tabline" },
+	{ import = "astrocommunity.startup.mini-starter" },
+	{
+		"echasnovski/mini.starter",
+		config = function(_, opts)
+			local starter = require("mini.starter")
+			starter.setup({
+				header = table.concat({
+					[[            __    __                             __]],
+					[[            |  \  |  \                           |  \]],
+					[[            | ▓▓\ | ▓▓ ______   ______  __     __ \▓▓______ ____]],
+					[[            | ▓▓▓\| ▓▓/      \ /      \|  \   /  \  \      \    \]],
+					[[            | ▓▓▓▓\ ▓▓  ▓▓▓▓▓▓\  ▓▓▓▓▓▓\\▓▓\ /  ▓▓ ▓▓ ▓▓▓▓▓▓\▓▓▓▓\]],
+					[[            | ▓▓\▓▓ ▓▓ ▓▓    ▓▓ ▓▓  | ▓▓ \▓▓\  ▓▓| ▓▓ ▓▓ | ▓▓ | ▓▓]],
+					[[            | ▓▓ \▓▓▓▓ ▓▓▓▓▓▓▓▓ ▓▓__/ ▓▓  \▓▓ ▓▓ | ▓▓ ▓▓ | ▓▓ | ▓▓]],
+					[[            | ▓▓  \▓▓▓\▓▓     \\▓▓    ▓▓   \▓▓▓  | ▓▓ ▓▓ | ▓▓ | ▓▓]],
+					[[             \▓▓   \▓▓ \▓▓▓▓▓▓▓ \▓▓▓▓▓▓     \▓    \▓▓\▓▓  \▓▓  \▓▓]],
+					[[]],
+					[[                           Welcome back, Krzysztof!               ]],
+				}, "\n"),
+				footer = "",
+				items = {
+					starter.sections.telescope(),
+					starter.sections.recent_files(),
+					starter.sections.builtin_actions(),
+				},
+				content_hooks = {
+					starter.gen_hook.adding_bullet(),
+					starter.gen_hook.aligning("center", "center"),
+				},
+			})
+		end,
+	},
 	{ import = "astrocommunity.test.neotest" },
-	{ import = "astrocommunity/utility/mason-tool-installer-nvim" },
+	{ import = "astrocommunity.utility.mason-tool-installer-nvim" },
+	{ import = "astrocommunity.utility.telescope-live-grep-args-nvim" },
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		opts = {
@@ -138,5 +172,5 @@ return {
 			},
 		},
 	},
-	{ import = "astrocommunity/workflow/hardtime-nvim" },
+	{ import = "astrocommunity.workflow.hardtime-nvim" },
 }
