@@ -13,6 +13,7 @@ return {
 			style = "night",
 		},
 	},
+	-- per line commenting
 	{ import = "astrocommunity.comment.mini-comment" },
 	{ import = "astrocommunity.completion.cmp-cmdline" },
 	{ import = "astrocommunity.debugging.nvim-dap-repl-highlights" },

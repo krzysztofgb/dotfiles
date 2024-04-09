@@ -1,7 +1,6 @@
 ---@type LazySpec
 return {
 	"andweeb/presence.nvim",
-	"max397574/better-escape.nvim",
 	-- Detect tabstop and shiftwidth automatically
 	"tpope/vim-sleuth",
 	-- Game to practice vim motions
@@ -32,14 +31,6 @@ return {
 			statusline.section_location = function()
 				return "%2l:%-2v"
 			end
-		end,
-	},
-	{
-		"L3MON4D3/LuaSnip",
-		config = function(plugin, opts)
-			require("astronvim.plugins.configs.luasnip")(plugin, opts)
-			local luasnip = require("luasnip")
-			luasnip.filetype_extend("javascript", { "javascriptreact" })
 		end,
 	},
 	{
