@@ -84,6 +84,12 @@ return {
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.go" },
+  {
+    "nvim-neotest/neotest-go",
+    args = {
+      "-count=1", "-race"
+    },
+  },
   { import = "astrocommunity.pack.java" },
   { import = "astrocommunity.pack.json" },
   { import = "astrocommunity.pack.markdown" },
@@ -94,7 +100,8 @@ return {
   { import = "astrocommunity.pack.terraform" },
   { import = "astrocommunity.pack.toml" },
   { import = "astrocommunity.pack.yaml" },
-  { import = "astrocommunity.recipes.disable-tabline" },
+  { import = "astrocommunity.recipes.heirline-clock-statusline" },
+  { import = "astrocommunity.recipes.heirline-mode-text-statusline" },
   { import = "astrocommunity.startup.mini-starter" },
   {
     "echasnovski/mini.starter",
@@ -141,7 +148,7 @@ return {
       local go_home = function()
         local wins = vim.api.nvim_tabpage_list_wins(0)
         if #wins > 1 and vim.bo[vim.api.nvim_win_get_buf(wins[1])].filetype == "neo-tree" then
-          vim.fn.win_gotoid(wins[2]) -- go to non-neo-tree window to toggle dashboardf
+          vim.fn.win_gotoid(wins[2]) -- go to non-neo-tree window to toggle dashboard
         end
         starter.open()
       end
