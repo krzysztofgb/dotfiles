@@ -130,3 +130,5 @@ source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 eval $(thefuck --alias)
 # You can use whatever you want as an alias, like for Mondays:
 eval $(thefuck --alias fuck)
+
+alias nv="nvim"

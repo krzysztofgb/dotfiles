@@ -125,6 +125,18 @@ return {
           starter.gen_hook.aligning("center", "center"),
         },
       }
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "LazyVimStarted",
+        desc = "Add dashboard footer",
+        once = true,
+        callback = function()
+          local stats = require("lazy").stats()
+          local ms = math.floor(stats.startuptime * 100 + 0.5) / 100
+          starter.config.footer = "Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins  in " .. ms .. "ms"
+          starter.refresh()
+        end,
+      })
     end,
   },
   { import = "astrocommunity.test.neotest" },
