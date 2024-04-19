@@ -50,7 +50,6 @@ return {
       },
     },
   },
-  { import = "astrocommunity.file-explorer.telescope-file-browser-nvim" },
   { import = "astrocommunity.fuzzy-finder.telescope-zoxide" },
   { import = "astrocommunity.git.blame-nvim" },
   { import = "astrocommunity.indent.mini-indentscope" },
