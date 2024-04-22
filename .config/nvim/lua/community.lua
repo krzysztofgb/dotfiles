@@ -76,6 +76,20 @@ return {
   { import = "astrocommunity.markdown-and-latex.glow-nvim" },
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
   { import = "astrocommunity.media.codesnap-nvim" },
+  {
+    "mistricky/codesnap.nvim",
+    config = function()
+      require("codesnap").setup {
+        mac_window_bar = true,
+        save_path = "~/Desktop",
+        code_font_family = "JetBrains Mono",
+        watermark = "",
+        bg_theme = "default",
+        has_breadcrumbs = true,
+        breadcrumbs_separator = "/",
+      }
+    end,
+  },
   { import = "astrocommunity.motion.flash-nvim" },
   { import = "astrocommunity.motion.harpoon" },
   { import = "astrocommunity.motion.mini-surround" },
@@ -86,7 +100,8 @@ return {
   {
     "nvim-neotest/neotest-go",
     args = {
-      "-count=1", "-race"
+      "-count=1",
+      "-race",
     },
   },
   { import = "astrocommunity.pack.java" },
@@ -139,7 +154,13 @@ return {
         callback = function()
           local stats = require("lazy").stats()
           local ms = math.floor(stats.startuptime * 100 + 0.5) / 100
-          starter.config.footer = "Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins  in " .. ms .. "ms"
+          starter.config.footer = "Neovim loaded "
+            .. stats.loaded
+            .. "/"
+            .. stats.count
+            .. " plugins  in "
+            .. ms
+            .. "ms"
           starter.refresh()
         end,
       })
@@ -152,7 +173,6 @@ return {
         starter.open()
       end
       vim.keymap.set("n", "<Leader>h", go_home, { desc = "Go [H]ome" })
-
     end,
   },
   { import = "astrocommunity.test.neotest" },
