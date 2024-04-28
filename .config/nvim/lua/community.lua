@@ -41,6 +41,7 @@ return {
       formatters_by_ft = {
         go = { "gofumpt" },
         lua = { "stylua" },
+        markdown = { "mdformat" },
         python = { "black" },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
@@ -62,7 +63,6 @@ return {
       local lint = require "lint"
       lint.linters_by_ft = {
         go = { "golangcilint" },
-        markdown = { "markdownlint" },
       }
 
       local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
@@ -211,7 +211,6 @@ return {
             },
           },
         },
-        markdownlint = {},
         pyright = {},
         stylua = {},
       },
