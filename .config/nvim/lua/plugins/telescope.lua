@@ -21,8 +21,12 @@ return {
       extensions = {
         file_browser = {
           hijack_netrw = true,
-          depth = 5,
-          hidden = { file_browser = true, folder_browser = true },
+          depth = 3,
+          hidden = {
+            file_browser = true,
+            folder_browser = true,
+            respect_gitignore = true,
+          },
         },
       },
     }
