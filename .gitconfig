@@ -1,0 +1,20 @@
+[user]
+	name = Krzysztof Gasienica-Bednarz
+	email = krzysztofgb@yahoo.com
+[core]
+	excludesfile = /Users/krzysztofg/.gitignore_global
+[commit]
+	template = /Users/krzysztofg/.stCommitMsg
+[mergetool]
+	keepBackup = false
+[alias]
+	pl = !"git pull --rebase origin main"
+	sq = !"git reset --soft HEAD~$(git rev-list --count HEAD ^origin/main); git add .; git commit -m \"Squashed commit from $(git rev-parse --abbrev-ref HEAD)\"; git push -f"
+	db = !"git branch | grep -v \"develop\" | grep -v \"master\" | grep -v \"main\" | xargs git branch -D"
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[push]
+	autoSetupRemote = true
