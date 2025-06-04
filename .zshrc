@@ -135,3 +135,5 @@ eval $(thefuck --alias)
 eval $(thefuck --alias fuck)
 
 alias nv="nvim"
+
+eval "$(~/.local/bin/mise activate zsh)"
