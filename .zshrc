@@ -137,3 +137,5 @@ eval $(thefuck --alias fuck)
 alias nv="nvim"
 
 eval "$(~/.local/bin/mise activate zsh)"
+
+alias claude="/Users/krzysztofg/.claude/local/claude"
