@@ -98,6 +98,9 @@ fi
 fpath=( ~/.zsh_functions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
+# Mise config precedes others
+eval "$(~/.local/bin/mise activate zsh)"
+
 # Python config
 alias poetry='noglob poetry'
 if command -v pyenv 1>/dev/null 2>&1; then
@@ -121,7 +124,6 @@ export PATH="/Users/krzysztofg/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 eval "$(zoxide init zsh)"
-alias cd="z"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -136,6 +138,6 @@ eval $(thefuck --alias fuck)
 
 alias nv="nvim"
 
-eval "$(~/.local/bin/mise activate zsh)"
-
 alias claude="/Users/krzysztofg/.claude/local/claude"
+
+eval "$(gs shell completion zsh)"
