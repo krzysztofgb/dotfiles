@@ -1,13 +1,23 @@
 # Setup fzf
 # ---------
-if [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; then
-  PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
+if [[ -n "$HOMEBREW_PREFIX" && -d "$HOMEBREW_PREFIX/opt/fzf" ]]; then
+  FZF_BASE="$HOMEBREW_PREFIX/opt/fzf"
+elif [[ -d "$HOME/.fzf" ]]; then
+  FZF_BASE="$HOME/.fzf"
+elif [[ -d "/usr/share/doc/fzf/examples" ]]; then
+  FZF_BASE="/usr/share/doc/fzf/examples"
 fi
 
-# Auto-completion
-# ---------------
-source "/opt/homebrew/opt/fzf/shell/completion.bash"
+if [[ -z "$FZF_BASE" ]]; then
+  echo "[.fzf.bash] warning: fzf not found" >&2
+else
+  [[ "$PATH" != *"$FZF_BASE/bin"* ]] && export PATH="$FZF_BASE/bin:$PATH"
 
-# Key bindings
-# ------------
-source "/opt/homebrew/opt/fzf/shell/key-bindings.bash"
+  # Auto-completion
+  # ---------------
+  [[ -f "$FZF_BASE/shell/completion.bash" ]] && source "$FZF_BASE/shell/completion.bash"
+
+  # Key bindings
+  # ------------
+  [[ -f "$FZF_BASE/shell/key-bindings.bash" ]] && source "$FZF_BASE/shell/key-bindings.bash"
+fi

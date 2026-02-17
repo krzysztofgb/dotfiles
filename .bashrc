@@ -4,6 +4,6 @@ export PATH="/Users/krzysztofg/.rd/bin:$PATH"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-. "$HOME/.local/bin/env"
+[[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 
 export HOMEBREW_NO_AUTO_UPDATE=1

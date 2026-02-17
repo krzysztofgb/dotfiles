@@ -2,9 +2,9 @@
 	name = Krzysztof Gasienica-Bednarz
 	email = krzysztofgb@yahoo.com
 [core]
-	excludesfile = /Users/krzysztofg/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [commit]
-	template = /Users/krzysztofg/.stCommitMsg
+	template = ~/.stCommitMsg
 [mergetool]
 	keepBackup = false
 [alias]
