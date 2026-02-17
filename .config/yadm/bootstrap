@@ -134,7 +134,7 @@ clone_plugin "fast-syntax-highlighting" "https://github.com/zdharma-continuum/fa
 # ---------------------------------------------------------------------------
 # Step 6 — Tmux Plugin Manager (TPM)
 # ---------------------------------------------------------------------------
-step "Tmux Plugin Manager"
+step "Tmux Plugin Manager (TPM)"
 TPM_DIR="$HOME/.tmux/plugins/tpm"
 if [[ -d "$TPM_DIR" ]]; then
     ok "TPM already installed at $TPM_DIR"
@@ -152,7 +152,24 @@ if [[ -f "$TPM_DIR/bin/install_plugins" ]]; then
 fi
 
 # ---------------------------------------------------------------------------
-# Step 7 — Summary
+# Step 7 — nvm
+# ---------------------------------------------------------------------------
+step "nvm"
+NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+if [[ -d "$NVM_DIR" ]]; then
+    ok "nvm already installed at $NVM_DIR"
+    SKIPPED+=("nvm")
+else
+    info "Installing nvm..."
+    # PROFILE=/dev/null prevents the installer from modifying shell config files
+    # (yadm already manages .zshrc / .bashrc)
+    PROFILE=/dev/null bash -c "$(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/HEAD/install.sh)"
+    ok "nvm installed"
+    INSTALLED+=("nvm")
+fi
+
+# ---------------------------------------------------------------------------
+# Step 8 — Summary
 # ---------------------------------------------------------------------------
 step "Summary"
 if [[ ${#INSTALLED[@]} -gt 0 ]]; then

@@ -98,6 +98,15 @@ elif [[ "$OSTYPE" == linux* ]]; then
   fi
 fi
 
+# Node / nvm
+export NVM_DIR="$HOME/.nvm"
+if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+  \. "$NVM_DIR/nvm.sh"
+  [[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
+else
+  _zshrc_warn "nvm not found"
+fi
+
 # Roc config
 if [[ -n "$HOMEBREW_PREFIX" && -d "$HOMEBREW_PREFIX/opt/llvm@16/bin" ]]; then
   export PATH="$HOMEBREW_PREFIX/opt/llvm@16/bin:$PATH"
