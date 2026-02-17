@@ -53,7 +53,7 @@ step "Brewfile"
 BREWFILE="$HOME/.config/homebrew/Brewfile"
 if [[ -f "$BREWFILE" ]]; then
     info "Installing packages from $BREWFILE..."
-    brew bundle --file "$BREWFILE" --no-lock
+    brew bundle --file "$BREWFILE"
     ok "Brewfile packages installed"
     INSTALLED+=("brewfile-packages")
 else
@@ -61,7 +61,38 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# Step 3 — Oh-My-Zsh
+# Step 3 — Java symlinks (macOS only)
+# ---------------------------------------------------------------------------
+step "Java symlinks"
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    BREW_PREFIX="$(brew --prefix)"
+    symlink_jdk() {
+        local formula="$1"   # e.g. openjdk@17
+        local link_name="$2" # e.g. openjdk-17.jdk
+        local src="$BREW_PREFIX/opt/$formula/libexec/openjdk.jdk"
+        local dest="/Library/Java/JavaVirtualMachines/$link_name"
+        if [[ ! -d "$src" ]]; then
+            warn "$formula not installed — skipping symlink"
+            return
+        fi
+        if [[ -e "$dest" ]]; then
+            ok "Symlink already exists: $dest"
+            SKIPPED+=("jdk-symlink:$link_name")
+        else
+            info "Creating JDK symlink: $dest"
+            sudo ln -sfn "$src" "$dest"
+            ok "Symlinked $formula → $dest"
+            INSTALLED+=("jdk-symlink:$link_name")
+        fi
+    }
+    symlink_jdk "openjdk@17" "openjdk-17.jdk"
+    symlink_jdk "openjdk"    "openjdk.jdk"
+else
+    info "Linux — no JDK symlinks needed (java available via PATH)"
+fi
+
+# ---------------------------------------------------------------------------
+# Step 4 — Oh-My-Zsh
 # ---------------------------------------------------------------------------
 step "Oh-My-Zsh"
 OMZ_DIR="${ZSH:-$HOME/.oh-my-zsh}"
@@ -76,7 +107,7 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# Step 4 — OMZ plugins
+# Step 5 — OMZ plugins
 # ---------------------------------------------------------------------------
 step "Oh-My-Zsh plugins"
 ZSH_CUSTOM="${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}"
@@ -101,7 +132,7 @@ clone_plugin "zsh-syntax-highlighting"  "https://github.com/zsh-users/zsh-syntax
 clone_plugin "fast-syntax-highlighting" "https://github.com/zdharma-continuum/fast-syntax-highlighting"
 
 # ---------------------------------------------------------------------------
-# Step 5 — Tmux Plugin Manager (TPM)
+# Step 6 — Tmux Plugin Manager (TPM)
 # ---------------------------------------------------------------------------
 step "Tmux Plugin Manager"
 TPM_DIR="$HOME/.tmux/plugins/tpm"
@@ -121,7 +152,7 @@ if [[ -f "$TPM_DIR/bin/install_plugins" ]]; then
 fi
 
 # ---------------------------------------------------------------------------
-# Step 6 — Summary
+# Step 7 — Summary
 # ---------------------------------------------------------------------------
 step "Summary"
 if [[ ${#INSTALLED[@]} -gt 0 ]]; then
