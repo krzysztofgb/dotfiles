@@ -8,6 +8,8 @@ return {
   "ThePrimeagen/vim-be-good",
   -- Cool animations
   "eandrju/cellular-automaton.nvim",
+  -- Wakatime time tracking
+  "wakatime/vim-wakatime",
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
