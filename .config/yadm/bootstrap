@@ -169,7 +169,21 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# Step 8 — Summary
+# Step 8 — ccstatusline
+# ---------------------------------------------------------------------------
+step "ccstatusline"
+CCSTATUSLINE_CFG="$HOME/.config/ccstatusline/settings.json"
+if [[ -f "$CCSTATUSLINE_CFG" ]]; then
+    ok "ccstatusline settings already present at $CCSTATUSLINE_CFG"
+    SKIPPED+=("ccstatusline")
+else
+    warn "ccstatusline is not configured."
+    warn "Run interactively to set it up:"
+    warn "  npx ccstatusline@latest"
+fi
+
+# ---------------------------------------------------------------------------
+# Step 9 — Summary
 # ---------------------------------------------------------------------------
 step "Summary"
 if [[ ${#INSTALLED[@]} -gt 0 ]]; then
