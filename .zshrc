@@ -5,11 +5,27 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+_zshrc_warn() { print -P "%F{yellow}[.zshrc] warning: $1%f" >&2 }
+
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Some binaries install here (Claude Code)
 export PATH="$HOME/.local/bin:$PATH"
+
+# Homebrew - cross-platform init (sets HOMEBREW_PREFIX)
+if [[ -f /opt/homebrew/bin/brew ]]; then                      # macOS Apple Silicon
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -f /usr/local/bin/brew ]]; then                       # macOS Intel
+  eval "$(/usr/local/bin/brew shellenv)"
+elif [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then       # Linux
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+else
+  _zshrc_warn "brew not found"
+fi
+
+# Disable Homebrew auto-updating
+export HOMEBREW_NO_AUTO_UPDATE=1
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -35,9 +51,6 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlightin
 
 source $ZSH/oh-my-zsh.sh
 
-# Disable Homebrew auto-updating
-export HOMEBREW_NO_AUTO_UPDATE=1
-
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
@@ -51,40 +64,85 @@ fpath=( ~/.zsh_functions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
 # Mise config precedes others
-eval "$(mise activate zsh)"
+if command -v mise &>/dev/null; then
+  eval "$(mise activate zsh)" || _zshrc_warn "mise activation failed"
+else
+  _zshrc_warn "mise not found"
+fi
 
 # Python config
 alias poetry='noglob poetry'
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
+if command -v pyenv &>/dev/null; then
+  eval "$(pyenv init -)" || _zshrc_warn "pyenv init failed"
+  export PATH="$(pyenv root)/shims:$PATH"
+else
+  _zshrc_warn "pyenv not found"
 fi
-PATH=$(pyenv root)/shims:/Users/krzysztofg/.local/bin:$PATH
 export PYTHON_KEYRING_BACKEND=keyring.backends.fail.Keyring
 
 # Go config
 export PATH="$HOME/go/bin:$PATH"
 
 # Java config
-export JAVA_HOME=$(/usr/libexec/java_home)
+if [[ "$OSTYPE" == darwin* ]]; then
+  if /usr/libexec/java_home &>/dev/null; then
+    export JAVA_HOME=$(/usr/libexec/java_home)
+  else
+    _zshrc_warn "no Java runtime found (java_home)"
+  fi
+elif [[ "$OSTYPE" == linux* ]]; then
+  if command -v java &>/dev/null; then
+    export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
+  else
+    _zshrc_warn "java not found"
+  fi
+fi
 
 # Roc config
-export PATH="/opt/homebrew/opt/llvm@16/bin:$PATH"
+if [[ -n "$HOMEBREW_PREFIX" && -d "$HOMEBREW_PREFIX/opt/llvm@16/bin" ]]; then
+  export PATH="$HOMEBREW_PREFIX/opt/llvm@16/bin:$PATH"
+else
+  _zshrc_warn "llvm@16 not found"
+fi
 export PATH="/usr/local/roc:$PATH"
 
-eval "$(zoxide init zsh)"
+if command -v zoxide &>/dev/null; then
+  eval "$(zoxide init zsh)" || _zshrc_warn "zoxide init failed"
+else
+  _zshrc_warn "zoxide not found"
+fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [[ -f ~/.fzf.zsh ]]; then
+  source ~/.fzf.zsh
+else
+  _zshrc_warn "fzf shell integration not found (~/.fzf.zsh)"
+fi
 
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+# Powerlevel10k theme - try Homebrew first, then oh-my-zsh custom themes dir
+if [[ -n "$HOMEBREW_PREFIX" && -f "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
+  source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
+elif [[ -f "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
+  source "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k/powerlevel10k.zsh-theme"
+else
+  _zshrc_warn "powerlevel10k theme not found"
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-eval $(thefuck --alias)
-# You can use whatever you want as an alias, like for Mondays:
-eval $(thefuck --alias fuck)
+if command -v thefuck &>/dev/null; then
+  eval $(thefuck --alias) || _zshrc_warn "thefuck alias setup failed"
+  # You can use whatever you want as an alias, like for Mondays:
+  eval $(thefuck --alias fuck)
+else
+  _zshrc_warn "thefuck not found"
+fi
 
 alias nv="nvim"
 
 # git-spice auto-completions
-eval "$(gs shell completion zsh)"
+if command -v gs &>/dev/null; then
+  eval "$(gs shell completion zsh)" || _zshrc_warn "gs shell completion failed"
+else
+  _zshrc_warn "gs (git-spice) not found"
+fi
